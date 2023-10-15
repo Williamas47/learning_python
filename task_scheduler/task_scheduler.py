@@ -192,10 +192,12 @@ def action_selector():
     ordered_tasks = sorted(tasks, key=lambda task: task['remaining_time_to_alert'])
     for task in ordered_tasks:
       pins = 20 - len(task['name'])
+      # implement year logic
       remaining_days = task['remaining_time_to_alert'].days
       remaining_hours, remainder = divmod(task['remaining_time_to_alert'].seconds, 3600)
       remaining_minutes, _ = divmod(remainder, 60)
-      remaining_time = f"{remaining_days} day(s), {remaining_hours} hour(s) and {remaining_minutes} minute(s)"
+      remaining_seconds = task['remaining_time_to_alert'].seconds % 60
+      remaining_time = f"{remaining_days} day(s), {remaining_hours} hour(s) and {remaining_minutes} minute(s) and {remaining_seconds} seconds"
       print(task['name']+" " + '-' * pins + " " + str(task['date']) + ' ---------------- ' + remaining_time)
   else:
     print("Exiting application...")
